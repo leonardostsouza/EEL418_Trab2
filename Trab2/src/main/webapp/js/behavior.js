@@ -6,6 +6,8 @@
  * DRE: 112086681
  */
 
+serverURL = "http://127.0.0.1:8084/Trab2";
+
 function menuBehavior(option){
     cleanTextFields('all');
     showSearchResult(false);
@@ -132,4 +134,28 @@ function showSearchResult(show){
         displayType = 'block';
     }
     document.getElementById('idDivResultados').style.display = displayType;
+}
+
+function sendSearchRequest(){
+    var request;
+    if (window.XMLHttpRequest){
+        request = new XMLHttpRequest();
+    } else {
+        // compatibility with IE5 & IE6
+        request = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    request.onreadystatechange = function() {
+        if (request.readyState == 4){
+            if(request.status == 200) {
+                document.getElementById("idTabelaResultados").innerHTML = request.responseText;
+            }else{
+                alert("Server not found");
+            }
+        }
+    };
+    
+    request.open('POST', serverURL, true);
+    request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    request.send();
 }
