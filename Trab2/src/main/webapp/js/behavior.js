@@ -136,6 +136,8 @@ function showSearchResult(show){
     document.getElementById('idDivResultados').style.display = displayType;
 }
 
+// ============================================================
+
 function sendSearchRequest(){
     var request;
     if (window.XMLHttpRequest){
@@ -149,13 +151,53 @@ function sendSearchRequest(){
         if (request.readyState == 4){
             if(request.status == 200) {
                 document.getElementById("idTabelaResultados").innerHTML = request.responseText;
+                document.getElementById("idpatrimonio2").value = request.responseText;
             }else{
                 alert("Server not found");
             }
         }
     };
     
+    var patrimonio = document.getElementById('idpatrimonio2').value;
+    
     request.open('POST', serverURL, true);
     request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    request.send();
+    request.send("patrimonio:" + patrimonio);
 }
+
+
+// ============================================================
+
+var sendSearchRequest = function (){
+    // Preparacao do pedido
+    var request = {
+        "patrimonio" : document.getElementById('patrimonio').value,
+        "titulo" : document.getElementById('titulo').value,
+        "autoria" : document.getElementById('autoria').value,
+        "veiculo" : document.getElementById('veiculo').value,
+        "dataIni" : document.getElementById('dataIni').value,
+        "dataFim" : document.getElementById('dataFim').value,
+        "palavrasChave" : document.getElementById('palavrasChave').value
+    };
+    
+    fazerPedidoAJAX(request,popularCamposComRespostaJSON);
+};
+
+function fazerPedidoAJAX(objetoJSON,funcPopularPagina){
+    var stringJSON = JSON.stringify(objetoJSON);
+    var objPedidoAJAX = new XMLHttpRequest();
+    objPedidoAJAX.open("POST", "controller");
+    objPedidoAJAX.setRequestHeader("Content-Type","application/json;charset=UTF-8");
+    // Prepara recebimento da resposta: tipo da resposta JSON!
+    objPedidoAJAX.responseType = 'json';
+    objPedidoAJAX.onreadystatechange =
+        function() {
+            if(objPedidoAJAX.readyState===4 && objPedidoAJAX.status===200){
+                // A resposta 'response' já é avaliada para json!
+                // Ao contraro da resposta responseText.
+                funcPopularPagina(objPedidoAJAX.response);
+            };
+        };
+    // Envio do pedido
+    objPedidoAJAX.send(stringJSON);
+};

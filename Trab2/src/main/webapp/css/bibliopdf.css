@@ -222,3 +222,51 @@ tr{
 .alinha_esquerda {
     text-align:left;
 }
+
+.title {
+    position:relative;
+    top:0;
+    width:100%;
+    text-align:center;
+    margin:auto;
+    font-family:verdana;
+    text-decoration:none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size:37px;
+	letter-spacing:3px;
+	color:#555555;
+	display:block;
+	position:absolute;
+	top:17px;
+	padding-left:2px;
+  }
+
+  .headerMenu {
+  position:relative;
+  z-index:2;
+  font-size: 17px;
+  background-color:#5f5f5f;
+  color:#f1f1f1;
+  width:100%;
+  padding:0;
+  letter-spacing:1px;
+}
+.headerMenu a{
+  padding:10px 15px 9px 15px !important;
+  display:inline-block;
+}
+.headerMenu a:hover{
+  background-color:#000000;
+  color:#ffffff;
+}
+.headerMenu a.active {
+  background-color:#73AD21;
+  background-color:#4CAF50;  
+  color:#ffffff;
+}
+
+a:hover, a:active {
+  color:#6E9A06;
+}
